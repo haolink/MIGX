@@ -50,7 +50,7 @@ if (!function_exists('checkFields')) {
 
 if ($object->xpdo) {
     $modx = &$object->xpdo;
-    $events = $modx->fromJson('{events}');
+    $events = $modx->fromJson('[{"pluginid":"MIGX","event":"OnDocFormPrerender","priority":0,"propertyset":0,"name":"OnDocFormPrerender","service":1,"groupname":"Resources"},{"pluginid":"MIGX","event":"OnTVInputPropertiesList","priority":0,"propertyset":0,"name":"OnTVInputPropertiesList","service":1,"groupname":"Template Variables"},{"pluginid":"MIGX","event":"OnTVInputRenderList","priority":1,"propertyset":0,"name":"OnTVInputRenderList","service":1,"groupname":"Template Variables"},{"pluginid":"MIGXquip","event":"OnDocFormPrerender","priority":0,"propertyset":0,"name":"OnDocFormPrerender","service":1,"groupname":"Resources"},{"pluginid":"migxResizeOnUpload","event":"OnFileManagerUpload","priority":0,"propertyset":0,"name":"OnFileManagerUpload","service":1,"groupname":"System"}]');
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_INSTALL:
         case xPDOTransport::ACTION_UPGRADE:

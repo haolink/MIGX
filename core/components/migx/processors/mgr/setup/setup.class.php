@@ -24,11 +24,13 @@ class migxSetupProcessor extends modProcessor
         //$tableList = array(array('table1'=>'classname1'),array('table2'=>'className2'));
         $restrictPrefix = true;
 
+        $dbType = $this->modx->getOption('dbtype');
+
         $packagepath = $this->modx->getOption('core_path') . 'components/' . $packageName .
             '/';
         $modelpath = $packagepath . 'model/';
         $schemapath = $modelpath . 'schema/';
-        $schemafile = $schemapath . $packageName . '.mysql.schema.xml';
+        $schemafile = $schemapath . $packageName . '.' . $dbType . '.schema.xml';
 
         $manager = $this->modx->getManager();
         $generator = $manager->getGenerator();

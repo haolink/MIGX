@@ -1,7 +1,10 @@
 <?php
 
 $modx = &$object->xpdo;
-$modx->log(modX::LOG_LEVEL_INFO, 'create/upgrade tables');
+
+$dbType = $modx->getOption('dbtype');
+
+$modx->log(modX::LOG_LEVEL_INFO, 'create/upgrade tables for db type ' . $dbType);
 if ($object->xpdo) {
 
     $packageName = 'migx';
@@ -11,7 +14,7 @@ if ($object->xpdo) {
     $packagepath = $modx->getOption('core_path') . 'components/' . $packageName . '/';
     $modelpath = $packagepath . 'model/';
     $schemapath = $modelpath . 'schema/';
-    $schemafile = $schemapath . $packageName . '.mysql.schema.xml';
+    $schemafile = $schemapath . $packageName . '.' . $dbType .  '.schema.xml';
 
 
     if (file_exists($schemafile)) {
@@ -24,7 +27,10 @@ if ($object->xpdo) {
             case xPDOTransport::ACTION_UPGRADE:
                 $modx->addPackage($packageName, $modelpath, $prefix);
                 $migxmodelPath = $modx->getOption('migx.core_path', null, $modx->getOption('core_path') . 'components/migx/') . 'model/';
-                include_once ($migxmodelPath . 'migx/migxpackagemanager.class.php');
+
+                $migxPackageManagerPath = $migxmodelPath . 'migx/migxpackagemanager.' . $dbType . '.class.php';
+                include_once ($migxPackageManagerPath);
+        $modx->log(modX::LOG_LEVEL_INFO, 'Schema file available');
                 $pkgman = new MigxPackageManager($modx);
 
                 break;

@@ -893,8 +893,10 @@ class Migx {
     }
 
     function loadPackageManager() {
+        $modx = &$this->modx;
+        $dbType = $modx->getOption('dbtype');
 
-        include_once ($this->config['modelPath'] . 'migx/migxpackagemanager.class.php');
+        include_once ($this->config['modelPath'] . 'migx/migxpackagemanager.' . $dbType . '.class.php');
         return new MigxPackageManager($this->modx);
     }
 
@@ -2095,6 +2097,23 @@ class Migx {
                     break;
                 case 'datetime':
                     $c->select("CAST(IFNULL(tvSort.value, tvDefault.default_text) AS DATETIME) AS sortTV");
+                    break;
+                case 'string':
+                default:
+                    $c->select("IFNULL(tvSort.value, tvDefault.default_text) AS sortTV");
+                    break;
+            }
+        }
+        if ($this->modx->getOption('dbtype') === 'sqlsrv') {
+            switch ($sortbyTVType) {
+                case 'integer':
+                    $c->select("CAST(IFNULL(tvSort.value, tvDefault.default_text) AS int) AS sortTV");
+                    break;
+                case 'decimal':
+                    $c->select("CAST(IFNULL(tvSort.value, tvDefault.default_text) AS decimal) AS sortTV");
+                    break;
+                case 'datetime':
+                    $c->select("CAST(IFNULL(tvSort.value, tvDefault.default_text) AS datetime) AS sortTV");
                     break;
                 case 'string':
                 default:

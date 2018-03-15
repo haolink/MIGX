@@ -34,10 +34,12 @@ class migxCreatePackageProcessor extends modProcessor {
             //$this->setPlaceholder('schema', @file_get_contents($schemafile));
         }
 
+        $dbType = $this->modx->getOption('dbtype');
+
         $packagepath = $this->modx->getOption('core_path') . 'components/' . $packageName . '/';
         $modelpath = $packagepath . 'model/';
         $schemapath = $modelpath . 'schema/';
-        $schemafile = $schemapath . $packageName . '.mysql.schema.xml';
+        $schemafile = $schemapath . $packageName . '.' . $dbType . '.schema.xml';
 
         if (file_exists($packagepath . 'config/config.inc.php')) {
             include ($packagepath . 'config/config.inc.php');
@@ -74,7 +76,7 @@ class migxCreatePackageProcessor extends modProcessor {
 
         if ($properties['task'] == 'createPackage') {
             $content = '';
-            $schematemplate = $this->modx->migx->config['templatesPath'] . 'mgr/schemas/default.mysql.schema.xml';
+            $schematemplate = $this->modx->migx->config['templatesPath'] . 'mgr/schemas/default.' . $dbType . '.schema.xml';
             if (file_exists($schematemplate)) {
                 $content = file_get_contents($schematemplate);
                 $chunk = $this->modx->newObject('modChunk');
